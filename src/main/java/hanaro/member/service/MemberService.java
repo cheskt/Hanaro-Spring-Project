@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import hanaro.member.dto.MemberDTO;
-import hanaro.member.dto.MemberRegisterRequestDTO;
+import hanaro.member.dto.SignUpDTO;
 import hanaro.member.entity.Member;
 import hanaro.member.entity.enums.Role;
 import hanaro.member.repository.MemberRepository;
@@ -28,7 +28,7 @@ public class MemberService {
 
     // 회원가입 -> 나중에 암호화 추가해야됨
     @Transactional
-    public MemberDTO registerMember(MemberRegisterRequestDTO requestDTO) {
+    public MemberDTO signUpMember(SignUpDTO requestDTO) {
         Member member = Member.builder()
                               .email(requestDTO.getEmail())
                               .password(requestDTO.getPassword())

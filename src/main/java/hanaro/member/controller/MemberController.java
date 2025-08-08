@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hanaro.member.dto.MemberDTO;
-import hanaro.member.dto.MemberRegisterRequestDTO;
+import hanaro.member.dto.SignUpDTO;
 import hanaro.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +25,14 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping
-    public ResponseEntity<MemberDTO> registerMember(@RequestBody MemberRegisterRequestDTO requestDTO) {
-        return ResponseEntity.ok(memberService.registerMember(requestDTO));
-    }
-
     @GetMapping
     public ResponseEntity<List<MemberDTO>> getAllMembers() {
         return ResponseEntity.ok(memberService.getAllMembers());
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<MemberDTO> signUpMember(@RequestBody SignUpDTO requestDTO) {
+        return ResponseEntity.ok(memberService.signUpMember(requestDTO));
     }
 
     @DeleteMapping("/{userId}")
