@@ -1,8 +1,5 @@
 package hanaro.member.entity;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
 import hanaro.member.entity.enums.Role;
 import hanaro.util.BaseTime;
 import jakarta.persistence.Column;
