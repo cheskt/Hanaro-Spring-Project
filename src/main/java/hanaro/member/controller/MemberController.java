@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
-
     private final MemberService memberService;
 
     @PostMapping("/signup")
@@ -40,6 +39,6 @@ public class MemberController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<Void>> deleteMember(@PathVariable int userId) {
         memberService.deleteMember(userId);
-        return ResponseEntity.ok(ApiResponse.onSuccess(null, "성공입니다."));
+        return ResponseEntity.ok(ApiResponse.onSuccess(null, "멤버 삭제 성공"));
     }
 }
