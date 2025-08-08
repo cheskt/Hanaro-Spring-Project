@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import hanaro.member.dto.MemberDTO;
 import hanaro.member.dto.SignUpDTO;
 import hanaro.member.service.MemberService;
+import hanaro.response.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,19 +27,19 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/signup")
+    public ResponseEntity<MemberDTO> signUpMember(@RequestBody @Valid SignUpDTO requestDTO) {
+        return ResponseEntity.ok(memberService.signUpMember(requestDTO));
+    }
+
     @GetMapping
     public ResponseEntity<List<MemberDTO>> getAllMembers() {
         return ResponseEntity.ok(memberService.getAllMembers());
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<MemberDTO> signUpMember(@RequestBody SignUpDTO requestDTO) {
-        return ResponseEntity.ok(memberService.signUpMember(requestDTO));
-    }
-
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable int userId) {
+    public ResponseEntity<ApiResponse<Void>> deleteMember(@PathVariable int userId) {
         memberService.deleteMember(userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.onSuccess(null, "성공입니다."));
     }
 }

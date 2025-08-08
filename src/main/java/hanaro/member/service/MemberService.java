@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hanaro.exception.GeneralException;
 import hanaro.member.dto.MemberDTO;
 import hanaro.member.dto.SignUpDTO;
 import hanaro.member.entity.Member;
 import hanaro.member.entity.enums.Role;
 import hanaro.member.repository.MemberRepository;
+import hanaro.response.code.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,19 +28,22 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    // 회원가입 -> 나중에 암호화 추가해야됨
     @Transactional
-    public MemberDTO signUpMember(SignUpDTO req) {
+    public MemberDTO signUpMember(SignUpDTO requestDTO) {
         Member member = Member.builder()
-                         .email(req.getEmail())
-                         .password(req.getPassword())
-                         .build();
+                .email(requestDTO.getEmail())
+                .password(requestDTO.getPassword())
+                .role(Role.MEMBER) // 기본 역할은 MEMBER로 설정
+                .build();
         return toDTO(memberRepository.save(member));
     }
 
     @Transactional
     public void deleteMember(int userId) {
-        memberRepository.deleteById(userId);
+        if (!memberRepository.existsById(userId)) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+        }
+        memberRepository.deleteById(userId); // @SQLDelete 어노테이션에 의해 deletedAt이 업데이트됩니다.
     }
 
     private MemberDTO toDTO(Member member) {

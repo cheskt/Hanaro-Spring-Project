@@ -23,17 +23,17 @@ public enum ErrorStatus implements BaseErrorCode {
 	REFRESH_TOKEN_NOT_MATCH(HttpStatus.UNAUTHORIZED, "TOKEN4005-1","Refresh Token 정보가 일치하지 않습니다."),
 	TOKEN_IS_NOT_AUTHORITY(HttpStatus.UNAUTHORIZED,"TOKEN4006","권한 정보가 없는 토큰입니다."),
 	NO_AUTHENTICATION_INFORMATION(HttpStatus.UNAUTHORIZED,"TOKEN4006","인증 정보가 없는 토큰입니다."),
-	USER_ID_IN_USE(HttpStatus.NOT_FOUND, "USER4000", "사용중인 유저아이디 입니다."),
-	USER_NICKNAME_IN_USE(HttpStatus.NOT_FOUND, "USER4001", "사용중인 닉네임 입니다"),
-	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER4002", "해당 관리자가 없습니다"),
-	USER_NOT_AUTHORITY(HttpStatus.NOT_FOUND, "USER4003", "권한이 없습니다"),
-	USER_NOT_MATCH_USERNAME(HttpStatus.NOT_FOUND, "USER4004", "유저 아이디가 잘못됐습니다."),
-	USER_NOT_MATCH_PASSWORD(HttpStatus.NOT_FOUND, "USER4005", "유저 비밀번호가 잘못됐습니다."),
+	MEMBER_ID_IN_USE(HttpStatus.NOT_FOUND, "MEMBER4000", "사용중인 유저아이디 입니다."),
+	MEMBER_NICKNAME_IN_USE(HttpStatus.NOT_FOUND, "MEMBER4001", "사용중인 닉네임 입니다"),
+	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER4002", "해당 유저가 없습니다"),
+	MEMBER_NOT_AUTHORITY(HttpStatus.NOT_FOUND, "MEMBER4003", "권한이 없습니다"),
+	MEMBER_NOT_MATCH_MEMBERNAME(HttpStatus.NOT_FOUND, "MEMBER4004", "유저 아이디가 잘못됐습니다."),
+	MEMBER_NOT_MATCH_PASSWORD(HttpStatus.NOT_FOUND, "MEMBER4005", "유저 비밀번호가 잘못됐습니다."),
 
 	// 상품이랑 주문 등등은 나중에 추가합시다 ~
 	;
 
-	private final HttpStatus httpStatus;
+	private final HttpStatus httpStatusCode;
 	private final String code;
 	private final String message;
 
@@ -47,12 +47,12 @@ public enum ErrorStatus implements BaseErrorCode {
 	}
 
 	@Override
-	public ErrorReasonDTO getReasonHttpStatus() {
+		public ErrorReasonDTO getReasonHttpStatus() {
 		return ErrorReasonDTO.builder()
 							 .message(message)
 							 .code(code)
 							 .isSuccess(false)
-							 .httpStatus(httpStatus)
+							 .httpStatusCode(httpStatusCode)
 							 .build();
 	}
 

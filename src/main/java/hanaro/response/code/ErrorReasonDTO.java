@@ -2,13 +2,14 @@ package hanaro.response.code;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
+
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 @Builder
 public class ErrorReasonDTO {
 
-	private HttpStatus httpStatus;
+	private HttpStatusCode httpStatusCode;
 
 	private final boolean isSuccess;
 	private final String code;
