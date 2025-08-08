@@ -16,8 +16,6 @@ import lombok.Getter;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE #{tableName} SET deleted_at = NOW() WHERE id = ?")
-@Where(clause = "deleted_at is null")
 public class BaseTime {
 	@CreatedDate
 	@Column(updatable = false, columnDefinition = "DATETIME(0)")

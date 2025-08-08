@@ -28,12 +28,11 @@ public class MemberService {
 
     // 회원가입 -> 나중에 암호화 추가해야됨
     @Transactional
-    public MemberDTO signUpMember(SignUpDTO requestDTO) {
+    public MemberDTO signUpMember(SignUpDTO req) {
         Member member = Member.builder()
-                              .email(requestDTO.getEmail())
-                              .password(requestDTO.getPassword())
-                              .role(Role.MEMBER)
-                              .build();
+                         .email(req.getEmail())
+                         .password(req.getPassword())
+                         .build();
         return toDTO(memberRepository.save(member));
     }
 
