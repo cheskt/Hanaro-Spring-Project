@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import hanaro.member.dto.MemberDTO;
+import hanaro.member.dto.MemberRegisterRequestDTO;
 import hanaro.member.entity.Member;
+import hanaro.member.entity.enums.Role;
 import hanaro.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,17 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
+    // 회원가입 -> 나중에 암호화 추가해야됨
+    @Transactional
+    public MemberDTO registerMember(MemberRegisterRequestDTO requestDTO) {
+        Member member = Member.builder()
+                              .email(requestDTO.getEmail())
+                              .password(requestDTO.getPassword())
+                              .role(Role.MEMBER)
+                              .build();
+        return toDTO(memberRepository.save(member));
+    }
+
     @Transactional
     public void deleteMember(int userId) {
         memberRepository.deleteById(userId);
@@ -35,7 +48,6 @@ public class MemberService {
                 .email(member.getEmail())
                 .role(member.getRole())
                 .createdAt(member.getCreatedAt())
-                .deletedAt(member.getDeletedAt())
                 .build();
     }
 }

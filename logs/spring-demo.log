@@ -634,3 +634,37 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'hanarodb.member' doesn't exi
 2025-08-08 12:52:15 [RMI TCP Connection(5)-172.16.21.146] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-08-08 12:52:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-08-08 12:52:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-08 13:05:41 [restartedMain] INFO  hanaro.HanaroApplication - Starting HanaroApplication using Java 21.0.7 with PID 52848 (C:\Users\NT750XDA\Desktop\hanaro\build\classes\java\main started by NT750XDA in C:\Users\NT750XDA\Desktop\hanaro)
+2025-08-08 13:05:41 [restartedMain] INFO  hanaro.HanaroApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-08 13:05:43 [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[hanaro]' package. Please check your configuration.
+2025-08-08 13:05:44 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-08 13:05:44 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-08 13:05:44 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-08 13:05:45 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-08 13:05:45 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c992950
+2025-08-08 13:05:45 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-08 13:05:47 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-08 13:05:48 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-08 13:05:48 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-08 13:05:49 [restartedMain] INFO  o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-08 13:05:49 [restartedMain] INFO  hanaro.HanaroApplication - Started HanaroApplication in 8.128 seconds (process running for 10.487)
+2025-08-08 13:05:49 [RMI TCP Connection(3)-172.16.21.146] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-08 13:08:27 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-08 13:08:27 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-08-08 13:08:41 [restartedMain] INFO  hanaro.HanaroApplication - Starting HanaroApplication using Java 21.0.7 with PID 43652 (C:\Users\NT750XDA\Desktop\hanaro\build\classes\java\main started by NT750XDA in C:\Users\NT750XDA\Desktop\hanaro)
+2025-08-08 13:08:41 [restartedMain] INFO  hanaro.HanaroApplication - No active profile set, falling back to 1 default profile: "default"
+2025-08-08 13:08:42 [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[hanaro]' package. Please check your configuration.
+2025-08-08 13:08:43 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-08 13:08:43 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-08 13:08:43 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-08 13:08:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-08-08 13:08:44 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6dfde5af
+2025-08-08 13:08:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-08-08 13:08:46 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-08 13:08:47 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-08-08 13:08:47 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-08-08 13:08:47 [restartedMain] INFO  o.a.c.c.C.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-08-08 13:08:47 [restartedMain] INFO  hanaro.HanaroApplication - Started HanaroApplication in 7.214 seconds (process running for 8.343)
+2025-08-08 13:08:47 [RMI TCP Connection(2)-172.16.21.146] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-08 13:10:56 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-08 13:10:56 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
