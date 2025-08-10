@@ -13,12 +13,12 @@ import lombok.*;
 public class ItemImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int imageId;
 
     @Column(nullable = false)
-    private String imageSrc;
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "itemId", nullable = false)
     private Item item;
 }

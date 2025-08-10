@@ -33,6 +33,12 @@ public enum ErrorStatus implements BaseErrorCode {
 	// 상품 관련 에러
 	ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM4000", "해당 상품이 없습니다."),
 
+	// 파일 업로드 관련 에러
+	FILE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "FILE5000", "파일 업로드에 실패했습니다."),
+	FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "FILE4000", "파일 크기가 제한을 초과했습니다."),
+	TOTAL_FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "FILE4001", "총 파일 크기가 제한을 초과했습니다."),
+	INVALID_FILE_EXTENSION(HttpStatus.BAD_REQUEST, "FILE4002", "허용되지 않는 파일 확장자입니다."),
+
 	// 상품이랑 주문 등등은 나중에 추가합시다 ~
 	;
 
