@@ -31,21 +31,21 @@ public class OrderController {
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PostMapping()
 	public ResponseEntity<ApiResponse<OrderResponseDTO>> createOrder() {
-		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.createOrderFromCart(), "주문 생성"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.createOrderFromCart(), "주문 생성 성공"));
 	}
 
 	@Operation(summary = "주문 상세")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/{orderId}")
 	public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrder(@PathVariable int orderId) {
-		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.getOrder(orderId), "주문 상세"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.getOrder(orderId), "주문 상세 조회 성공"));
 	}
 
 	@Operation(summary = "내 주문 목록")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/list")
 	public ResponseEntity<ApiResponse<List<OrderResponseDTO>>> myOrders() {
-		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.myOrders(), "주문 목록"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.myOrders(), "주문 목록 조회 성공"));
 	}
 }
 

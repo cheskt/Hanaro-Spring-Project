@@ -34,14 +34,14 @@ public class CartController {
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/mycart")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> getMyCart() {
-		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.getMyCart(), "장바구니 조회"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.getMyCart(), "장바구니 조회 성공"));
 	}
 
 	@Operation(summary = "장바구니 담기", description = "장바구니에 상품을 담습니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PostMapping("/add")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> addToCart(@RequestBody CartItemRequestDTO req) {
-		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.addToCart(req), "장바구니 담기"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.addToCart(req), "장바구니 담기 성공"));
 	}
 
 	@Operation(summary = "장바구니 수량 변경", description = "장바구니 상품 수량을 변경합니다")
@@ -49,21 +49,21 @@ public class CartController {
 	@PutMapping("/items/{cartItemId}/update")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> updateCartItem(@PathVariable int cartItemId,
 		@RequestBody CartItemUpdateRequestDTO req) {
-		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.updateCartItem(cartItemId, req), "장바구니 상품 수량 변경"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.updateCartItem(cartItemId, req), "장바구니 상품 수량 변경 성공"));
 	}
 
 	@Operation(summary = "장바구니 상품 삭제", description = "장바구니의 상품을 삭제합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@DeleteMapping("/items/{cartItemId}/delete")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> removeCartItem(@PathVariable int cartItemId) {
-		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.removeCartItem(cartItemId), "장바구니 상품 삭제 완료"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.removeCartItem(cartItemId), "장바구니 상품 삭제 성공"));
 	}
 
 	@Operation(summary = "장바구니 비우기", description = "장바구니를 삭제합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@DeleteMapping("/delete")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> clearCart() {
-		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.clearCart(), "장바구니 비우기"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.clearCart(), "장바구니 비우기 성공"));
 	}
 }
 
