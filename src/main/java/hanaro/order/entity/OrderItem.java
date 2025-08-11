@@ -13,8 +13,7 @@ import lombok.*;
 @Setter
 @Table(name = "OrderItem")
 public class OrderItem extends BaseTime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderItemId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,8 +25,8 @@ public class OrderItem extends BaseTime {
     private Item item;
 
     @Column(nullable = false)
-    private int orderPrice;
-    
+    private int quantity;
+
     @Column(nullable = false)
-    private int count;
+    private int orderPrice;
 }
