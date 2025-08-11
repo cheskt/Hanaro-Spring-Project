@@ -30,21 +30,21 @@ public class CartController {
 
 	private final CartService cartService;
 
-	@Operation(summary = "내 장바구니 조회")
+	@Operation(summary = "장바구니 조회", description = "내 장바구니를 조회합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping
 	public ResponseEntity<ApiResponse<CartResponseDTO>> getMyCart() {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.getMyCart(), "장바구니 조회"));
 	}
 
-	@Operation(summary = "장바구니 담기")
+	@Operation(summary = "장바구니 담기", description = "장바구니에 상품을 담습니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PostMapping("/items")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> addToCart(@RequestBody CartItemRequestDTO req) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.addToCart(req), "장바구니 담기"));
 	}
 
-	@Operation(summary = "장바구니 수량 변경")
+	@Operation(summary = "장바구니 수량 변경", description = "장바구니 상품 수량을 변경합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PatchMapping("/items/{cartItemId}")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> updateCartItem(@PathVariable int cartItemId,
@@ -52,14 +52,14 @@ public class CartController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.updateCartItem(cartItemId, req), "수량 변경"));
 	}
 
-	@Operation(summary = "장바구니 상품 삭제")
+	@Operation(summary = "장바구니 상품 삭제", description = "장바구니의 상품을 삭제합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@DeleteMapping("/items/{cartItemId}")
 	public ResponseEntity<ApiResponse<CartResponseDTO>> removeCartItem(@PathVariable int cartItemId) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.removeCartItem(cartItemId), "삭제 완료"));
 	}
 
-	@Operation(summary = "장바구니 비우기")
+	@Operation(summary = "장바구니 비우기", description = "장바구니를 삭제합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@DeleteMapping
 	public ResponseEntity<ApiResponse<CartResponseDTO>> clearCart() {

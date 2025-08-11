@@ -21,11 +21,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RequestMapping("/item")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "상품")
 public class ItemController {
 
     private final ItemService itemService;
 
-    @Tag(name = "상품")
     @Operation(summary = "상품 리스트", description = "상품 목록을 조회합니다")
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @GetMapping
@@ -34,7 +34,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(items, "상품 리스트"));
     }
 
-    @Tag(name = "상품")
     @Operation(summary = "상품 조회", description = "상품을 조회합니다")
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @GetMapping("/{itemId}")
@@ -43,7 +42,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(item, "상품 조회 완료"));
     }
 
-    @Tag(name = "상품")
     @Operation(summary = "상품 추가", description = "상품을 추가합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
@@ -52,7 +50,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(registeredItem, "상품 추가 완료"));
     }
 
-    @Tag(name = "상품")
     @Operation(summary = "상품 수정", description = "상품을 수정합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{itemId}/update")
@@ -61,7 +58,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(updatedItem, "상품 수정 완료"));
     }
 
-    @Tag(name = "상품")
     @Operation(summary = "상품 삭제", description = "상품을 삭제합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{itemId}/delete")
@@ -70,7 +66,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(null, "상품 삭제 완료"));
     }
 
-    @Tag(name = "상품 이미지")
     @Operation(summary = "상품 이미지 추가", description = "상품 이미지를 추가합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{itemId}/addimage", consumes = "multipart/form-data")
@@ -81,7 +76,6 @@ public class ItemController {
         return ResponseEntity.ok(ApiResponse.onSuccess(itemImage, "상품 이미지 등록 완료"));
     }
 
-    @Tag(name = "상품 이미지")
     @Operation(summary = "상품 이미지 삭제", description = "상품 이미지를 삭제합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{imageId}/deleteimage")
