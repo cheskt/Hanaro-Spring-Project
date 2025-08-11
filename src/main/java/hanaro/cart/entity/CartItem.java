@@ -6,25 +6,24 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(
+    name = "CartItem",
+    uniqueConstraints = @UniqueConstraint(name = "uk_cart_item", columnNames = {"cartId","itemId"})
+)
 @Getter
 @Setter
-@Table(name = "CartItem")
+@NoArgsConstructor
+@AllArgsConstructor @Builder
 public class CartItem extends BaseTime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cartId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "cartId", nullable = false)
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "itemId", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "itemId", nullable = false)
     private Item item;
 
     @Column(nullable = false)
-    private int count;
+    private int quantity;
 }
