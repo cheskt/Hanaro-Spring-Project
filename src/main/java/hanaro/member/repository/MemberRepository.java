@@ -1,8 +1,10 @@
 package hanaro.member.repository;
 
+import hanaro.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import hanaro.member.entity.Member;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
+    Optional<Member> findByEmail(String email);
 }

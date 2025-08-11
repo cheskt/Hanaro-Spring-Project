@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +27,6 @@ public class Member extends BaseTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
 
-	@Email
 	@Column(length = 30, unique = true)
 	private String email;
 
@@ -38,9 +36,4 @@ public class Member extends BaseTime {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20, columnDefinition = "VARCHAR(20) DEFAULT 'MEMBER'")
 	private Role role = Role.MEMBER;
-
-	@PrePersist
-	void prePersist() {
-		if (role == null) role = Role.MEMBER;
-	}
 }
