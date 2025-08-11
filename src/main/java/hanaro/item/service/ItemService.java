@@ -2,6 +2,7 @@ package hanaro.item.service;
 
 import hanaro.exception.GeneralException;
 import hanaro.item.dto.ItemDTO;
+import hanaro.item.dto.ItemDetailDTO;
 import hanaro.item.dto.ItemImageResponseDTO;
 import hanaro.item.entity.Item;
 import hanaro.item.entity.ItemImage;
@@ -165,5 +166,30 @@ public class ItemService {
 
         itemImage.getItem().removeImage(itemImage);
         itemImageRepository.delete(itemImage);
+    }
+
+    private ItemDetailDTO toDetailDTO(Item item) {
+        List<ItemImageResponseDTO> images = item.getItemImages().stream()
+                                                .map(img -> ItemImageResponseDTO.builder()
+                                                                                .imageId(img.getImageId())
+                                                                                .imageUrl(img.getImageUrl())
+                                                                                .itemId(item.getItemId())
+                                                                                .build())
+                                                .collect(Collectors.toList());
+
+        return ItemDetailDTO.builder()
+                            .itemId(item.getItemId())
+                            .itemName(item.getItemName())
+                            .price(item.getPrice())
+                            .stock(item.getStock())
+                            .images(images)
+                            .build();
+    }
+
+    @Transactional(readOnly = true)
+    public ItemDetailDTO getItemDetail(int itemId) {
+        Item item = itemRepository.findByItemId(itemId)
+                                  .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
+        return toDetailDTO(item);
     }
 }

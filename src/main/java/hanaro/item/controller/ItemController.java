@@ -1,6 +1,7 @@
 package hanaro.item.controller;
 
 import hanaro.item.dto.ItemDTO;
+import hanaro.item.dto.ItemDetailDTO;
 import hanaro.item.dto.ItemImageResponseDTO;
 import hanaro.item.service.ItemService;
 import hanaro.response.ApiResponse;
@@ -41,8 +42,8 @@ public class ItemController {
     @Tag(name = "상품")
     @Operation(summary = "상품 조회", description = "상품을 조회합니다")
     @GetMapping("/{itemId}")
-    public ResponseEntity<ApiResponse<ItemDTO>> getItemById(@PathVariable int itemId) {
-        ItemDTO item = itemService.getItemById(itemId);
+    public ResponseEntity<ApiResponse<ItemDetailDTO>> getItemById(@PathVariable int itemId) {
+        ItemDetailDTO item = itemService.getItemDetail(itemId);
         return ResponseEntity.ok(ApiResponse.onSuccess(item, "상품 조회 완료"));
     }
 
