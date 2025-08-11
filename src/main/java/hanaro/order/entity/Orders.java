@@ -39,9 +39,5 @@ public class Orders extends BaseTime {
         this.items.add(oi);
         oi.setOrder(this);
     }
-    // public void removeItem(OrderItem oi) {
-    //     this.items.remove(oi);
-    //     oi.setOrder(null);
-    // }
 }
 
