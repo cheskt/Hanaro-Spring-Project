@@ -27,7 +27,7 @@ public class OrderStatusScheduler {
 		ordersRepository.advanceStatus(Status.PAID,    Status.READY,    now.minusMinutes(5), now);
 
 		// ordersRepository.advanceStatus(Status.TRANSIT, Status.DELIVERED, now.minusSeconds(30), now);
-		// 테스트
+		//
 		// ordersRepository.advanceStatus(Status.READY,   Status.TRANSIT,  now.minusSeconds(20), now);
 		//
 		// ordersRepository.advanceStatus(Status.PAID,    Status.READY,    now.minusSeconds(10), now);

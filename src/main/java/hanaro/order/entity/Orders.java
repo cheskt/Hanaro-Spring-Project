@@ -20,7 +20,7 @@ public class Orders extends BaseTime {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "Status", nullable = false)
     private Status status;
 
