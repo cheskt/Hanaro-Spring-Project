@@ -9,6 +9,7 @@ import hanaro.member.entity.Member;
 import hanaro.member.entity.enums.Role;
 import hanaro.member.repository.MemberRepository;
 import hanaro.response.code.status.ErrorStatus;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +18,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -37,6 +40,9 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public MemberDTO signUpMember(SignUpDTO requestDTO) {
+        if (memberRepository.findByEmail(requestDTO.getEmail()).isPresent()) {
+            throw new GeneralException(ErrorStatus.MEMBER_ID_IN_USE);
+        }
         Member member = Member.builder()
                 .email(requestDTO.getEmail())
                 .password(passwordEncoder.encode(requestDTO.getPassword()))
@@ -53,11 +59,19 @@ public class MemberService implements UserDetailsService {
         memberRepository.deleteById(userId);
     }
 
-    public String signIn(SignInDTO signInDTO) {
-        UserDetails userDetails = loadUserByUsername(signInDTO.getEmail());
-        if (!passwordEncoder.matches(signInDTO.getPassword(), userDetails.getPassword())) {
-            throw new GeneralException(ErrorStatus.MEMBER_NOT_FOUND);
+    @Transactional(readOnly = true)
+    public String signIn(@Valid SignInDTO signInDTO) {
+        final UserDetails userDetails;
+        try {
+            userDetails = loadUserByUsername(signInDTO.getEmail());
+        } catch (UsernameNotFoundException e) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_MATCH_MEMBERNAME);
         }
+
+        if (!passwordEncoder.matches(signInDTO.getPassword(), userDetails.getPassword())) {
+            throw new GeneralException(ErrorStatus.MEMBER_NOT_MATCH_PASSWORD);
+        }
+
         return jwtUtil.generateToken(userDetails);
     }
 

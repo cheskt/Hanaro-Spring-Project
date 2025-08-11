@@ -7,9 +7,12 @@ import hanaro.item.service.ItemService;
 import hanaro.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/item")
 @RequiredArgsConstructor
+@Validated
 @Slf4j
 @Tag(name = "상품")
 public class ItemController {
@@ -45,7 +49,7 @@ public class ItemController {
     @Operation(summary = "상품 추가", description = "상품을 추가합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse<ItemDTO>> addItem(@RequestBody ItemDTO requestDTO) {
+    public ResponseEntity<ApiResponse<ItemDTO>> addItem(@RequestBody @Valid ItemDTO requestDTO) {
         ItemDTO registeredItem = itemService.addItem(requestDTO);
         return ResponseEntity.ok(ApiResponse.onSuccess(registeredItem, "상품 추가 성공"));
     }
@@ -53,7 +57,8 @@ public class ItemController {
     @Operation(summary = "상품 수정", description = "상품을 수정합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{itemId}/update")
-    public ResponseEntity<ApiResponse<ItemDTO>> updateItem(@PathVariable int itemId, @RequestBody ItemDTO requestDTO) {
+    public ResponseEntity<ApiResponse<ItemDTO>> updateItem(@PathVariable @Positive(message="itemId는 양수여야 합니다.") int itemId,
+        @RequestBody ItemDTO requestDTO) {
         ItemDTO updatedItem = itemService.updateItem(itemId, requestDTO);
         return ResponseEntity.ok(ApiResponse.onSuccess(updatedItem, "상품 수정 성공"));
     }

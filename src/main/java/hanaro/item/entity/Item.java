@@ -25,6 +25,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Item {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int itemId;
@@ -32,11 +33,14 @@ public class Item {
 	@Column(length = 20, nullable = false)
 	private String itemName;
 
+	@Column(nullable = false)
 	private int price;
 
+	@Column(nullable = false)
 	private int stock;
 
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Builder.Default
 	private List<ItemImage> itemImages = new ArrayList<>();
 
 	public void addImage(ItemImage itemImage) {
