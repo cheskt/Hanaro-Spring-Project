@@ -26,7 +26,7 @@ public enum ErrorStatus implements BaseErrorCode {
 	MEMBER_ID_IN_USE(HttpStatus.NOT_FOUND, "MEMBER4000", "사용중인 유저아이디 입니다."),
 	MEMBER_NICKNAME_IN_USE(HttpStatus.NOT_FOUND, "MEMBER4001", "사용중인 닉네임 입니다"),
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER4002", "해당 유저가 없습니다"),
-	MEMBER_NOT_AUTHORITY(HttpStatus.NOT_FOUND, "MEMBER4003", "권한이 없습니다"),
+	MEMBER_NOT_AUTHORITY(HttpStatus.FORBIDDEN, "MEMBER4003", "권한이 없습니다"),
 	MEMBER_NOT_MATCH_MEMBERNAME(HttpStatus.NOT_FOUND, "MEMBER4004", "유저 아이디가 잘못됐습니다."),
 	MEMBER_NOT_MATCH_PASSWORD(HttpStatus.NOT_FOUND, "MEMBER4005", "유저 비밀번호가 잘못됐습니다."),
 
@@ -38,8 +38,6 @@ public enum ErrorStatus implements BaseErrorCode {
 	FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "FILE4000", "파일 크기가 제한을 초과했습니다."),
 	TOTAL_FILE_SIZE_EXCEEDED(HttpStatus.BAD_REQUEST, "FILE4001", "총 파일 크기가 제한을 초과했습니다."),
 	INVALID_FILE_EXTENSION(HttpStatus.BAD_REQUEST, "FILE4002", "허용되지 않는 파일 확장자입니다."),
-
-	// 상품이랑 주문 등등은 나중에 추가합시다 ~
 	;
 
 	private final HttpStatus httpStatusCode;

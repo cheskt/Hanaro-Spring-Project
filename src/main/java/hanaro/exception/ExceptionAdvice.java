@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +66,18 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 		log.error("GeneralException caught: {}", generalException.getMessage());
 		ErrorReasonDTO errorReasonHttpStatus = generalException.getErrorReasonHttpStatus();
 		return handleExceptionInternal(generalException,errorReasonHttpStatus,null,request);
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<Object> handleAccessDenied(AccessDeniedException e, HttpServletRequest request) {
+		var reason = ErrorStatus.MEMBER_NOT_AUTHORITY.getReasonHttpStatus();
+		return handleExceptionInternal(e, reason, HttpHeaders.EMPTY, request);
+	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<Object> handleAuth(AuthenticationException e, HttpServletRequest request) {
+		var reason = ErrorStatus._UNAUTHORIZED.getReasonHttpStatus();
+		return handleExceptionInternal(e, reason, HttpHeaders.EMPTY, request);
 	}
 
 	private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorReasonDTO reason,

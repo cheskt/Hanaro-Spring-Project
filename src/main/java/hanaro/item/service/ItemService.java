@@ -38,21 +38,18 @@ public class ItemService {
     private static final long MAX_FILE_SIZE_BYTES = 512 * 1024;
     private static final long MAX_TOTAL_FILE_SIZE_BYTES = 3 * 1024 * 1024;
 
-    private ItemDTO toDTO(Item item) {
-        return ItemDTO.builder()
-                .itemId(item.getItemId())
-                .itemName(item.getItemName())
-                .price(item.getPrice())
-                .stock(item.getStock())
-                .build();
+    @Transactional(readOnly = true)
+    public List<ItemDTO> getAllItems() {
+        return itemRepository.findAll().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 
-    private ItemImageResponseDTO toImageDTO(ItemImage itemImage) {
-        return ItemImageResponseDTO.builder()
-                .imageId(itemImage.getImageId())
-                .imageUrl(itemImage.getImageUrl())
-                .itemId(itemImage.getItem().getItemId())
-                .build();
+    @Transactional(readOnly = true)
+    public ItemDetailDTO getItemDetail(int itemId) {
+        Item item = itemRepository.findByItemId(itemId)
+                                  .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
+        return toDetailDTO(item);
     }
 
     @Transactional
@@ -63,20 +60,6 @@ public class ItemService {
                 .stock(requestDTO.getStock())
                 .build();
         return toDTO(itemRepository.save(item));
-    }
-
-    @Transactional(readOnly = true)
-    public List<ItemDTO> getAllItems() {
-        return itemRepository.findAll().stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public ItemDTO getItemById(int itemId) {
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
-        return toDTO(item);
     }
 
     @Transactional
@@ -154,7 +137,7 @@ public class ItemService {
                 .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
 
         Path filePath = Paths.get(BASE_UPLOAD_PATH, itemImage.getImageUrl());
-        Path originFilePath = Paths.get(BASE_UPLOAD_PATH, ORIGIN_DIR, 
+        Path originFilePath = Paths.get(BASE_UPLOAD_PATH, ORIGIN_DIR,
             itemImage.getImageUrl().substring(itemImage.getImageUrl()
                                                        .indexOf(UPLOAD_DIR) + UPLOAD_DIR.length() + 1));
 
@@ -168,6 +151,22 @@ public class ItemService {
         itemImageRepository.delete(itemImage);
     }
 
+    private ItemDTO toDTO(Item item) {
+        return ItemDTO.builder()
+                .itemName(item.getItemName())
+                .price(item.getPrice())
+                .stock(item.getStock())
+                .build();
+    }
+
+    private ItemImageResponseDTO toImageDTO(ItemImage itemImage) {
+        return ItemImageResponseDTO.builder()
+                .imageId(itemImage.getImageId())
+                .imageUrl(itemImage.getImageUrl())
+                .itemId(itemImage.getItem().getItemId())
+                .build();
+    }
+
     private ItemDetailDTO toDetailDTO(Item item) {
         List<ItemImageResponseDTO> images = item.getItemImages().stream()
                                                 .map(img -> ItemImageResponseDTO.builder()
@@ -178,7 +177,6 @@ public class ItemService {
                                                 .collect(Collectors.toList());
 
         return ItemDetailDTO.builder()
-                            .itemId(item.getItemId())
                             .itemName(item.getItemName())
                             .price(item.getPrice())
                             .stock(item.getStock())
@@ -186,10 +184,4 @@ public class ItemService {
                             .build();
     }
 
-    @Transactional(readOnly = true)
-    public ItemDetailDTO getItemDetail(int itemId) {
-        Item item = itemRepository.findByItemId(itemId)
-                                  .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
-        return toDetailDTO(item);
-    }
 }
