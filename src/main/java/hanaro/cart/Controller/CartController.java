@@ -19,6 +19,8 @@ import hanaro.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -40,22 +42,22 @@ public class CartController {
 	@Operation(summary = "장바구니 담기", description = "장바구니에 상품을 담습니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PostMapping("/add")
-	public ResponseEntity<ApiResponse<CartResponseDTO>> addToCart(@RequestBody CartItemRequestDTO req) {
+	public ResponseEntity<ApiResponse<CartResponseDTO>> addToCart(@RequestBody @Valid CartItemRequestDTO req) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.addToCart(req), "장바구니 담기 성공"));
 	}
 
 	@Operation(summary = "장바구니 수량 변경", description = "장바구니 상품 수량을 변경합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PutMapping("/items/{cartItemId}/update")
-	public ResponseEntity<ApiResponse<CartResponseDTO>> updateCartItem(@PathVariable int cartItemId,
-		@RequestBody CartItemUpdateRequestDTO req) {
+	public ResponseEntity<ApiResponse<CartResponseDTO>> updateCartItem(@PathVariable @Positive(message = "장바구니 상품 ID는 양수여야 합니다.") int cartItemId,
+		@RequestBody @Valid CartItemUpdateRequestDTO req) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.updateCartItem(cartItemId, req), "장바구니 상품 수량 변경 성공"));
 	}
 
 	@Operation(summary = "장바구니 상품 삭제", description = "장바구니의 상품을 삭제합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@DeleteMapping("/items/{cartItemId}/delete")
-	public ResponseEntity<ApiResponse<CartResponseDTO>> removeCartItem(@PathVariable int cartItemId) {
+	public ResponseEntity<ApiResponse<CartResponseDTO>> removeCartItem(@PathVariable @Positive(message = "장바구니 상품 ID는 양수여야 합니다.") int cartItemId) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(cartService.removeCartItem(cartItemId), "장바구니 상품 삭제 성공"));
 	}
 

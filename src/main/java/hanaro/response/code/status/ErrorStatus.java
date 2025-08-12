@@ -23,6 +23,11 @@ public enum ErrorStatus implements BaseErrorCode {
 
 	// 상품 관련 에러
 	ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM4000", "해당 상품이 없습니다."),
+	ITEM_STOCK_NOT_ENOUGH(HttpStatus.NOT_FOUND, "ITEM4000", "재고가 충분하지 않습니다."),
+	CART_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM4000", "장바구니 상품을 찾을 수 없습니다."),
+	CART_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM4000", "장바구니를 찾을 수 없습니다."),
+	CART_IS_EMPTY(HttpStatus.NOT_FOUND, "ITEM4000", "장바구니가 비어 있습니다."),
+	ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "ITEM4000", "주문을 찾을 수 없습니다."),
 
 	// 파일 업로드 관련 에러
 	FILE_UPLOAD_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "FILE5000", "파일 업로드에 실패했습니다."),

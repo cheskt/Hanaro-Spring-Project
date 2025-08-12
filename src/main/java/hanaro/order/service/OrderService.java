@@ -74,11 +74,11 @@ public class OrderService {
 		Member m = getCurrentMember();
 
 		Cart cart = cartRepository.findByMember(m)
-								  .orElseThrow(() -> new GeneralException(ErrorStatus._BAD_REQUEST));
+								  .orElseThrow(() -> new GeneralException(ErrorStatus.CART_NOT_FOUND));
 
 		List<CartItem> cartItems = cartItemRepository.findAllByCart(cart);
 		if (cartItems.isEmpty()) {
-			throw new GeneralException(ErrorStatus._BAD_REQUEST);
+			throw new GeneralException(ErrorStatus.CART_IS_EMPTY);
 		}
 
 		logger.info("주문한 고객 : {}", m.getEmail());
@@ -96,7 +96,7 @@ public class OrderService {
 									  .orElseThrow(() -> new GeneralException(ErrorStatus.ITEM_NOT_FOUND));
 			int qty = ci.getQuantity();
 			if (item.getStock() < qty) {
-				throw new GeneralException(ErrorStatus._BAD_REQUEST);
+				throw new GeneralException(ErrorStatus.ITEM_STOCK_NOT_ENOUGH);
 			}
 
 			item.setStock(item.getStock() - qty);
@@ -126,7 +126,13 @@ public class OrderService {
 	@Transactional(readOnly = true)
 	public OrderResponseDTO getOrder(int orderId) {
 		Orders order = ordersRepository.findByOrderId(orderId)
-									   .orElseThrow(() -> new GeneralException(ErrorStatus._BAD_REQUEST));
+									   .orElseThrow(() -> new GeneralException(ErrorStatus.ORDER_NOT_FOUND));
+
+		Member member = getCurrentMember();
+		if (order.getMember().getUserId() != member.getUserId() && member.getRole() != hanaro.member.entity.enums.Role.ADMIN) {
+			throw new GeneralException(ErrorStatus.MEMBER_NOT_AUTHORITY);
+		}
+
 		return toDTO(order);
 	}
 

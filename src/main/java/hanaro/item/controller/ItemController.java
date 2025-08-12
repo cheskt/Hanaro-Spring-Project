@@ -41,7 +41,7 @@ public class ItemController {
     @Operation(summary = "상품 조회", description = "상품을 조회합니다")
     @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
     @GetMapping("/{itemId}")
-    public ResponseEntity<ApiResponse<ItemDetailDTO>> getItemById(@PathVariable int itemId) {
+    public ResponseEntity<ApiResponse<ItemDetailDTO>> getItemById(@PathVariable @Positive(message="itemId는 양수여야 합니다.") int itemId) {
         ItemDetailDTO item = itemService.getItemDetail(itemId);
         return ResponseEntity.ok(ApiResponse.onSuccess(item, "상품 조회 성공"));
     }
@@ -58,7 +58,7 @@ public class ItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{itemId}/update")
     public ResponseEntity<ApiResponse<ItemDTO>> updateItem(@PathVariable @Positive(message="itemId는 양수여야 합니다.") int itemId,
-        @RequestBody ItemDTO requestDTO) {
+        @RequestBody @Valid ItemDTO requestDTO) {
         ItemDTO updatedItem = itemService.updateItem(itemId, requestDTO);
         return ResponseEntity.ok(ApiResponse.onSuccess(updatedItem, "상품 수정 성공"));
     }
@@ -66,7 +66,7 @@ public class ItemController {
     @Operation(summary = "상품 삭제", description = "상품을 삭제합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{itemId}/delete")
-    public ResponseEntity<ApiResponse<Void>> deleteItem(@PathVariable int itemId) {
+    public ResponseEntity<ApiResponse<Void>> deleteItem(@PathVariable @Positive(message="itemId는 양수여야 합니다.") int itemId) {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok(ApiResponse.onSuccess(null, "상품 삭제 성공"));
     }
@@ -75,7 +75,7 @@ public class ItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{itemId}/addimage", consumes = "multipart/form-data")
     public ResponseEntity<ApiResponse<ItemImageResponseDTO>> addImageToItem(
-        @PathVariable int itemId,
+        @PathVariable @Positive(message="itemId는 양수여야 합니다.") int itemId,
         @RequestPart("file") MultipartFile file) {
         ItemImageResponseDTO itemImage = itemService.addImageToItem(itemId, file);
         return ResponseEntity.ok(ApiResponse.onSuccess(itemImage, "상품 이미지 등록 성공"));
@@ -84,7 +84,7 @@ public class ItemController {
     @Operation(summary = "상품 이미지 삭제", description = "상품 이미지를 삭제합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{imageId}/deleteimage")
-    public ResponseEntity<ApiResponse<Void>> deleteImageFromItem(@PathVariable int imageId) {
+    public ResponseEntity<ApiResponse<Void>> deleteImageFromItem(@PathVariable @Positive(message="imageId는 양수여야 합니다.") int imageId) {
         itemService.deleteImageFromItem(imageId);
         return ResponseEntity.ok(ApiResponse.onSuccess(null, "상품 이미지 삭제 성공"));
     }

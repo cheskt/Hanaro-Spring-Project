@@ -94,7 +94,18 @@ public class ItemService {
         if (file.getSize() > MAX_FILE_SIZE_BYTES) {
             throw new GeneralException(ErrorStatus.FILE_SIZE_EXCEEDED);
         }
-        if (file.getSize() > MAX_TOTAL_FILE_SIZE_BYTES) {
+
+        long totalSize = item.getItemImages().stream()
+                .mapToLong(image -> {
+                    try {
+                        return Files.size(Paths.get(BASE_UPLOAD_PATH, image.getImageUrl()));
+                    } catch (IOException e) {
+                        return 0L;
+                    }
+                })
+                .sum();
+
+        if (totalSize + file.getSize() > MAX_TOTAL_FILE_SIZE_BYTES) {
             throw new GeneralException(ErrorStatus.TOTAL_FILE_SIZE_EXCEEDED);
         }
 

@@ -78,8 +78,6 @@ public class CartService {
 
 	@Transactional
 	public CartResponseDTO addToCart(CartItemRequestDTO req) {
-		if (req.getQuantity() <= 0) throw new GeneralException(ErrorStatus._BAD_REQUEST);
-
 		Member m = getCurrentMember();
 		Cart cart = getOrCreateCart(m);
 
@@ -89,12 +87,12 @@ public class CartService {
 		CartItem ci = cartItemRepository.findByCartAndItem(cart, item)
 										.map(ex -> {
 											int merged = ex.getQuantity() + req.getQuantity();
-											if (merged > item.getStock()) throw new GeneralException(ErrorStatus._BAD_REQUEST);
+											if (merged > item.getStock()) throw new GeneralException(ErrorStatus.ITEM_STOCK_NOT_ENOUGH);
 											ex.setQuantity(merged);
 											return ex;
 										})
 										.orElseGet(() -> {
-											if (req.getQuantity() > item.getStock()) throw new GeneralException(ErrorStatus._BAD_REQUEST);
+											if (req.getQuantity() > item.getStock()) throw new GeneralException(ErrorStatus.ITEM_STOCK_NOT_ENOUGH);
 											CartItem created = CartItem.builder()
 																	   .cart(cart).item(item).quantity(req.getQuantity()).build();
 											cart.addItem(created);
@@ -111,7 +109,7 @@ public class CartService {
 		Cart cart = getOrCreateCart(m);
 
 		CartItem ci = cartItemRepository.findById(cartItemId)
-										.orElseThrow(() -> new GeneralException(ErrorStatus._BAD_REQUEST));
+										.orElseThrow(() -> new GeneralException(ErrorStatus.CART_ITEM_NOT_FOUND));
 
 		if (ci.getCart().getCartId() != cart.getCartId())
 			throw new GeneralException(ErrorStatus.MEMBER_NOT_AUTHORITY);
@@ -120,7 +118,7 @@ public class CartService {
 			cart.removeItem(ci);
 			cartItemRepository.delete(ci);
 		} else {
-			if (req.getQuantity() > ci.getItem().getStock()) throw new GeneralException(ErrorStatus._BAD_REQUEST);
+			if (req.getQuantity() > ci.getItem().getStock()) throw new GeneralException(ErrorStatus.ITEM_STOCK_NOT_ENOUGH);
 			ci.setQuantity(req.getQuantity());
 		}
 		return toResponse(cart);
@@ -132,7 +130,7 @@ public class CartService {
 		Cart cart = getOrCreateCart(m);
 
 		CartItem ci = cartItemRepository.findById(cartItemId)
-										.orElseThrow(() -> new GeneralException(ErrorStatus._BAD_REQUEST));
+										.orElseThrow(() -> new GeneralException(ErrorStatus.CART_ITEM_NOT_FOUND));
 
 		if (ci.getCart().getCartId() != cart.getCartId())
 			throw new GeneralException(ErrorStatus.MEMBER_NOT_AUTHORITY);

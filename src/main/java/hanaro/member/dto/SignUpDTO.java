@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpDTO {
+public class
+SignUpDTO {
     @NotBlank(message = "이메일은 필수입니다.")
     @Email(message = "이메일 형식이 아닙니다.")
     @Size(max = 30, message = "이메일은 50자 이하만 가능합니다.")

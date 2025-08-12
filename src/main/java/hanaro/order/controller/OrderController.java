@@ -16,6 +16,7 @@ import hanaro.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -37,7 +38,7 @@ public class OrderController {
 	@Operation(summary = "주문 상세")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/{orderId}")
-	public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrder(@PathVariable int orderId) {
+	public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrder(@PathVariable @Positive(message = "주문 ID는 양수여야 합니다.") int orderId) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.getOrder(orderId), "주문 상세 조회 성공"));
 	}
 
