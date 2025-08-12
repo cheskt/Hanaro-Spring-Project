@@ -41,7 +41,7 @@ public class MemberController {
         return ResponseEntity.ok(ApiResponse.onSuccess(token, "로그인 성공"));
     }
 
-    @Operation(summary = "유저 리스트 조회", description = "유저 리스트를 조회합니다")
+    @Operation(summary = "[관리자] 유저 리스트 조회", description = "유저 리스트를 조회합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<ApiResponse<List<MemberDTO>>> getAllMembers() {
@@ -49,7 +49,7 @@ public class MemberController {
         return ResponseEntity.ok(ApiResponse.onSuccess(list, "유저 리스트 조회 성공"));
     }
 
-    @Operation(summary = "유저 삭제", description = "유저를 삭제합니다")
+    @Operation(summary = "[관리자] 유저 삭제", description = "유저를 삭제합니다")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<Void>> deleteMember(@PathVariable int userId) {

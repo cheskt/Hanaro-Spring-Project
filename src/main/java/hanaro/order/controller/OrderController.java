@@ -28,21 +28,21 @@ public class OrderController {
 
 	private final OrderService orderService;
 
-	@Operation(summary = "주문 생성")
+	@Operation(summary = "주문 생성", description = "주문을 생성합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@PostMapping()
 	public ResponseEntity<ApiResponse<OrderResponseDTO>> createOrder() {
 		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.createOrderFromCart(), "주문 생성 성공"));
 	}
 
-	@Operation(summary = "주문 상세")
+	@Operation(summary = "주문 상세", description = "내 주문을 상세조회합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/{orderId}")
 	public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrder(@PathVariable @Positive(message = "주문 ID는 양수여야 합니다.") int orderId) {
 		return ResponseEntity.ok(ApiResponse.onSuccess(orderService.getOrder(orderId), "주문 상세 조회 성공"));
 	}
 
-	@Operation(summary = "내 주문 목록")
+	@Operation(summary = "내 주문 목록", description = "내 주문 목록을 조회합니다")
 	@PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
 	@GetMapping("/list")
 	public ResponseEntity<ApiResponse<List<OrderResponseDTO>>> myOrders() {

@@ -33,7 +33,7 @@ public class DailySalesStatController {
 	private final DailyItemStatRepository dailyItemStatRepository;
 	private final DailyTotalStatRepository dailyTotalStatRepository;
 
-	@Operation(summary = "일일 아이템별 매출 통계 조회")
+	@Operation(summary = "[관리자] 일일 상품별 매출 통계 조회", description = "일일 상품별 매출 통계를 조회합니다")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/items")
 	public ResponseEntity<ApiResponse<List<DailyItemStatDTO>>> getDailyItemStats(
@@ -42,10 +42,10 @@ public class DailySalesStatController {
 		List<DailyItemStatDTO> result = dailyItemStatRepository.findAllByStatDate(date)
 															   .stream().map(this::toDTO).toList();
 
-		return ResponseEntity.ok(ApiResponse.onSuccess(result, "일일 아이템별 통계 조회 성공"));
+		return ResponseEntity.ok(ApiResponse.onSuccess(result, "일일 상품별 통계 조회 성공"));
 	}
 
-	@Operation(summary = "일일 총 매출 통계 조회")
+	@Operation(summary = "[관리자] 일일 총 매출 통계 조회", description = "일일 총 매출 통계를 조회합니다")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/total")
 	public ResponseEntity<ApiResponse<DailyTotalStatDTO>> getDailyTotalStat(
