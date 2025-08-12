@@ -37,7 +37,8 @@ public class SecurityConfig {
                     "/swagger.html",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
-                    "/hanaweb/api-docs/**"
+                    "/hanaweb/api-docs/**",
+                    "/actuator/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
