@@ -95,7 +95,7 @@ public class ItemService {
             throw new GeneralException(ErrorStatus.FILE_SIZE_EXCEEDED);
         }
         if (file.getSize() > MAX_TOTAL_FILE_SIZE_BYTES) {
-            throw new GeneralException(ErrorStatus.FILE_SIZE_EXCEEDED);
+            throw new GeneralException(ErrorStatus.TOTAL_FILE_SIZE_EXCEEDED);
         }
 
         LocalDate today = LocalDate.now();
