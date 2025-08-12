@@ -94,6 +94,9 @@ public class ItemService {
         if (file.getSize() > MAX_FILE_SIZE_BYTES) {
             throw new GeneralException(ErrorStatus.FILE_SIZE_EXCEEDED);
         }
+        if (file.getSize() > MAX_TOTAL_FILE_SIZE_BYTES) {
+            throw new GeneralException(ErrorStatus.FILE_SIZE_EXCEEDED);
+        }
 
         LocalDate today = LocalDate.now();
         String datePath = today.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
