@@ -24,10 +24,14 @@ import hanaro.order.repository.OrderItemRepository;
 import hanaro.order.repository.OrdersRepository;
 import hanaro.response.code.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
+	private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
 	private final OrdersRepository ordersRepository;
 	private final OrderItemRepository orderItemRepository;
@@ -76,6 +80,8 @@ public class OrderService {
 		if (cartItems.isEmpty()) {
 			throw new GeneralException(ErrorStatus._BAD_REQUEST);
 		}
+
+		logger.info("주문한 고객 : {}", m.getEmail());
 
 		Orders order = Orders.builder()
 							 .member(m)

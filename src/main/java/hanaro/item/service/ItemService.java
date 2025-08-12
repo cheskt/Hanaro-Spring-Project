@@ -10,6 +10,8 @@ import hanaro.item.repository.ItemRepository;
 import hanaro.item.repository.ItemImageRepository;
 import hanaro.response.code.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile; 
@@ -28,6 +30,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ItemService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
+
     private final ItemRepository itemRepository;
     private final ItemImageRepository itemImageRepository;
 
@@ -40,6 +44,7 @@ public class ItemService {
 
     @Transactional(readOnly = true)
     public List<ItemDTO> getAllItems() {
+        logger.info("Fetching all items");
         return itemRepository.findAll().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());

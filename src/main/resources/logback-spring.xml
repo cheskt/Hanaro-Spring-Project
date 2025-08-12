@@ -48,14 +48,14 @@
     </appender>
 
     <!-- 패키지별 Logger 설정 -->
-    <logger name="com.hanaro.product" level="INFO" additivity="false">
-        <appender-ref ref="PRODUCT_FILE"/>
+    <logger name="hanaro.item" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="PRODUCT_FILE"/>
     </logger>
 
-    <logger name="com.hana7.springdemo.jpa.service" level="INFO" additivity="false">
-        <appender-ref ref="ORDER_FILE"/>
+    <logger name="hanaro.order" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ORDER_FILE"/>
     </logger>
 
     <!-- 루트 로거 (나머지 모든 로그) -->
