@@ -53,7 +53,6 @@ public class BatchJobScheduler {
                 ErrorStatus.BATCH_RESTART_FAILED.getMessage(), e.getMessage(), e);
 
         } catch (Exception e) {
-            // 예기치 못한 모든 오류
             log.error("[BATCH] {} {} : {}",
                 ErrorStatus.BATCH_LAUNCH_FAILED.getCode(),
                 ErrorStatus.BATCH_LAUNCH_FAILED.getMessage(), e.getMessage(), e);

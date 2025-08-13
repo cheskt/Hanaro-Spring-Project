@@ -18,6 +18,7 @@ import hanaro.stats.entity.DailyItemStat;
 import hanaro.stats.entity.DailyTotalStat;
 import hanaro.stats.repository.DailyItemStatRepository;
 import hanaro.stats.repository.DailyTotalStatRepository;
+import hanaro.stats.service.DailySaleBatchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,8 +33,9 @@ public class DailySalesStatController {
 
 	private final DailyItemStatRepository dailyItemStatRepository;
 	private final DailyTotalStatRepository dailyTotalStatRepository;
+	private final DailySaleBatchService dailySaleBatchService;
 
-	@Operation(summary = "[관리자] 일일 상품별 매출 통계 조회", description = "일일 상품별 매출 통계를 조회합니다")
+	@Operation(summary = "[관리자] 일일 상품별 매출 통계 조회", description = "일일 상품별 매출 통계를 조회")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/items")
 	public ResponseEntity<ApiResponse<List<DailyItemStatDTO>>> getDailyItemStats(
@@ -45,11 +47,13 @@ public class DailySalesStatController {
 		return ResponseEntity.ok(ApiResponse.onSuccess(result, "일일 상품별 통계 조회 성공"));
 	}
 
-	@Operation(summary = "[관리자] 일일 총 매출 통계 조회", description = "일일 총 매출 통계를 조회합니다")
+	@Operation(summary = "[관리자] 일일 총 매출 통계 조회", description = "일일 총 매출 통계를 조회")
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/total")
 	public ResponseEntity<ApiResponse<DailyTotalStatDTO>> getDailyTotalStat(
 		@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+		dailySaleBatchService.runForDate(date);
 
 		DailyTotalStat stat = dailyTotalStatRepository.findByStatDate(date)
 													  .orElse(DailyTotalStat.builder()
@@ -80,4 +84,3 @@ public class DailySalesStatController {
 	}
 
 }
-

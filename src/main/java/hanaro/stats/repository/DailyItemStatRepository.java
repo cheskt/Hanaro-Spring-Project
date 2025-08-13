@@ -13,6 +13,17 @@ import hanaro.stats.entity.DailyItemStat;
 
 public interface DailyItemStatRepository extends JpaRepository<DailyItemStat, Integer> {
 
+    @Modifying
+    @Query(value = "INSERT INTO DailyItemStat (statDate, itemId, orderCount, quantity, amt, createdAt, updatedAt) " +
+                   "VALUES (:date, :itemId, 1, :quantity, :amount, :now, :now) " +
+                   "ON DUPLICATE KEY UPDATE " +
+                   "orderCount = orderCount + 1, " +
+                   "quantity = quantity + VALUES(quantity), " +
+                   "amt = amt + VALUES(amt), " +
+                   "updatedAt = :now", nativeQuery = true)
+    void upsert(@Param("date") LocalDate date, @Param("itemId") int itemId, @Param("quantity") int quantity, @Param("amount") int amount, @Param("now") LocalDateTime now);
+
+
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Query(value =
 		"INSERT INTO DailyItemStat (statDate, itemId, orderCount, quantity, amt, createdAt, updatedAt) " +
