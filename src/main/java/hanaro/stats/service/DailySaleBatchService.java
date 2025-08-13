@@ -19,7 +19,6 @@ public class DailySaleBatchService {
 	private final DailyItemStatRepository dailyItemStatRepository;
 	private final DailyTotalStatRepository dailyTotalStatRepository;
 
-	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
 	@Transactional
 	public void runDaily() {
 		runFor(LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1));

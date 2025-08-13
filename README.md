@@ -4,7 +4,34 @@
 
 이 프로젝트는 `stats` 디렉토리 내에서 일일 판매 통계를 계산하기 위한 배치 작업을 포함하고 있습니다.
 
-- **`DailySaleBatchService`**: 매일의 총 판매액과 상품별 판매량을 계산하는 핵심 서비스입니다.
+## 1. 배치 작업 (Batch)
+
+이 프로젝트는 Spring Batch 프레임워크를 사용하여 `stats` 디렉토리 내의 로직으로 일일 판매 통계를 계산합니다. Spring Batch는 대용량 데이터 처리에 안정성과 신뢰성을 제공합니다.
+
+- **아키텍처**:
+    - **`BatchConfig`**: Spring Batch의 `Job`과 `Step`을 설정하는 클래스입니다. `@EnableBatchProcessing`으로 활성화됩니다.
+    - **`dailySaleJob`**: 통계 집계를 위한 전체 배치 `Job`입니다.
+    - **`dailySaleStep`**: `Tasklet`을 사용하여 `DailySaleBatchService`의 통계 집계 메소드(`runDaily`)를 실행하는 간단한 `Step`으로 구성되어 있습니다.
+- **`DailySaleBatchService`**: 실제 통계 계산 로직을 담고 있는 서비스입니다.
+- **실행 방식**: `BatchJobScheduler`에 의해 매일 자정에 `dailySaleJob`이 실행됩니다.
+
+## 2. 스케줄링 (Scheduling)
+
+프로젝트는 두 가지 목적의 스케줄링을 사용합니다.
+
+### 2.1. 배치 작업 실행
+- **`BatchJobScheduler`**:
+    - **실행 주기**: `@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")` 설정에 따라, 매일 자정(00:00)에 `dailySaleJob` 배치 작업을 실행합니다.
+
+### 2.2. 주문 상태 변경
+- **`OrderStatusScheduler`**:
+    - **실행 주기**: `@Scheduled(fixedRate = 60_000)` 설정에 따라, 1분마다 실행됩니다.
+    - **주요 기능**: 시간의 흐름에 따라 주문의 상태를 다음 단계로 자동으로 변경합니다.
+        - **결제완료 (`PAID`)** -> 5분 후 -> **배달준비 (`READY`)**
+        - **배달준비 (`READY`)** -> 15분 후 -> **배달중 (`TRANSIT`)**
+        - **배달중 (`TRANSIT`)** -> 60분 후 -> **배달완료 (`DELIVERED`)**
+
+- **활성화**: `HanaroApplication.java` 파일에 `@EnableScheduling` 어노테이션이 있어 스케줄링 기능이 활성화되어 있습니다.
 
 - **실행 시점**: `@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")` 설정에 따라, 매일 자정(00:00)에 실행되어 전날의 판매 통계를 집계합니다.
 
